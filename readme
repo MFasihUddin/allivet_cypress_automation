@@ -1,0 +1,23 @@
+1. Basic Commands
+
+cy.visit('https://example.com')   // Visit a URL
+cy.url().should('include', '/home') // Verify URL contains a specific path
+cy.title().should('eq', 'Home')  // Verify page title
+
+2. Selecting Elements
+
+cy.get('.btn')              // Select element by class
+cy.get('#username')         // Select element by ID
+cy.get('[name="email"]')    // Select by attribute
+cy.get(':nth-child(2)')     // Select nth child
+cy.contains('Submit')       // Select element with text
+cy.get('.parent').find('.child') // Find child inside parent
+
+3. Actions (Click, Type, Select, etc.)
+cy.get('#submitBtn').click()         // Click button
+cy.get('#username').type('JohnDoe')  // Type in an input field
+cy.get('#password').type('secret{enter}') // Type and press Enter
+cy.get('#dropdown').select('Option 2') // Select dropdown option
+cy.get('[type="checkbox"]').check()   // Check a checkbox
+cy.get('[type="radio"]').check('male') // Select a radio button
+cy.get('#upload').attachFile('file.png') // Upload a file (needs cypress-file-upload plugin)
