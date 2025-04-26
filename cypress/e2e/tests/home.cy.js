@@ -1,34 +1,31 @@
+import HomePage from "../pages/homepage";
+
+const homePage = new HomePage();
 
 describe('Test1', () => {
     it('verify the site is accessible',()=>{
-        cy.visit("https://www.saucedemo.com/");
-        cy.wait(3000);
+        homePage.goto();
         cy.get('[class="login_logo"]').should('contain','Swag Labs');
+        
     })
 
     it('verify the login functionility',()=>{
-        cy.visit("https://www.saucedemo.com/");
-        cy.get('#user-name').type('standard_user');
-        cy.get('#password').type('secret_sauce');
-        cy.get('#login-button').click();
+        homePage.goto();
+        homePage.login();
         cy.get("[data-test='title']").should('be.visible');   
     })
 
 
     it('Verify Add to cart Functionality',()=>{
-        cy.visit("https://www.saucedemo.com/");
-        cy.get('#user-name').type('standard_user');
-        cy.get('#password').type('secret_sauce');
-        cy.get('#login-button').click();
+        homePage.goto();
+        homePage.login();
         cy.get("#add-to-cart-sauce-labs-backpack").click();
         cy.get("#remove-sauce-labs-backpack").should('contain','Remove'); 
     })
 
     it('Verify Remove Item from Add to cart Functionality',()=>{
-        cy.visit("https://www.saucedemo.com/");
-        cy.get('#user-name').type('standard_user');
-        cy.get('#password').type('secret_sauce');
-        cy.get('#login-button').click();
+        homePage.goto();
+        homePage.login();
         cy.get("#add-to-cart-sauce-labs-backpack").click();
         cy.wait(5000);
         cy.get("#remove-sauce-labs-backpack").click()
@@ -36,10 +33,8 @@ describe('Test1', () => {
     })
 
     it('Verify Remove Item from the cart',()=>{
-        cy.visit("https://www.saucedemo.com/");
-        cy.get('#user-name').type('standard_user');
-        cy.get('#password').type('secret_sauce');
-        cy.get('#login-button').click();
+        homePage.goto();
+        homePage.login();
         cy.get("#add-to-cart-sauce-labs-backpack").click();
         cy.get('[data-test="shopping-cart-link"]').click()
         cy.get("#remove-sauce-labs-backpack").click();
@@ -47,20 +42,16 @@ describe('Test1', () => {
     })
 
     it('Verify Redirection to Home Page',()=>{
-        cy.visit("https://www.saucedemo.com/");
-        cy.get('#user-name').type('standard_user');
-        cy.get('#password').type('secret_sauce');
-        cy.get('#login-button').click();
+        homePage.goto();
+        homePage.login();
         cy.get('[data-test="shopping-cart-link"]').click()
         cy.get("#continue-shopping").click();
         cy.url().should('contain','inventory.html'); 
     })
 
     it('Verify navigation to checkout page',()=>{
-        cy.visit("https://www.saucedemo.com/");
-        cy.get('#user-name').type('standard_user');
-        cy.get('#password').type('secret_sauce');
-        cy.get('#login-button').click();
+        homePage.goto();
+        homePage.login();
         cy.get("#add-to-cart-sauce-labs-backpack").click();
         cy.get('[data-test="shopping-cart-link"]').click();
         cy.get("#checkout").click();
@@ -68,10 +59,8 @@ describe('Test1', () => {
     })
 
     it('Verify navigation to checkout overview page',()=>{
-        cy.visit("https://www.saucedemo.com/");
-        cy.get('#user-name').type('standard_user');
-        cy.get('#password').type('secret_sauce');
-        cy.get('#login-button').click();
+        homePage.goto();
+        homePage.login();
         cy.get("#add-to-cart-sauce-labs-backpack").click();
         cy.get('[data-test="shopping-cart-link"]').click();
         cy.get("#checkout").click();
@@ -83,10 +72,8 @@ describe('Test1', () => {
     })
 
     it('Verify redirect to cart pafe via cancel',()=>{
-        cy.visit("https://www.saucedemo.com/");
-        cy.get('#user-name').type('standard_user');
-        cy.get('#password').type('secret_sauce');
-        cy.get('#login-button').click();
+        homePage.goto();
+        homePage.login();
         cy.get("#add-to-cart-sauce-labs-backpack").click();
         cy.get('[data-test="shopping-cart-link"]').click();
         cy.get("#checkout").click();
@@ -97,10 +84,8 @@ describe('Test1', () => {
 
 
     it('Verify order placed functionality',()=>{
-        cy.visit("https://www.saucedemo.com/");
-        cy.get('#user-name').type('standard_user');
-        cy.get('#password').type('secret_sauce');
-        cy.get('#login-button').click();
+        homePage.goto();
+        homePage.login();
         cy.get("#add-to-cart-sauce-labs-backpack").click();
         cy.get('[data-test="shopping-cart-link"]').click();
         cy.get("#checkout").click();
