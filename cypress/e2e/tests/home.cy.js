@@ -1,109 +1,84 @@
-import HomePage from "../pages/homepage";
+import Home from "../pages/home";
+import Product from "../pages/product";
+import Cart from "../pages/cart";
+import Checkout from "../pages/checkout";
+import CheckoutOverview from "../pages/checkoutOverview";
 
-const homePage = new HomePage();
+const home = new Home();
+const product = new Product();
+const cart = new Cart();
+const checkout = new Checkout();
+const checkoutoverview = new CheckoutOverview();
 
 describe('Test1', () => {
     it('verify the site is accessible',()=>{
-        homePage.goto();
+        home.goto();
         cy.get('[class="login_logo"]').should('contain','Swag Labs');
         
     })
 
     it('verify the login functionility',()=>{
-        homePage.goto();
-        homePage.login();
+        home.login();
         cy.get("[data-test='title']").should('be.visible');   
     })
 
 
     it('Verify Add to cart Functionality',()=>{
-        homePage.goto();
-        homePage.login();
-        cy.get("#add-to-cart-sauce-labs-backpack").click();
+        home.login();
+        product.addToCartButton();
         cy.get("#remove-sauce-labs-backpack").should('contain','Remove'); 
     })
 
     it('Verify Remove Item from Add to cart Functionality',()=>{
-        homePage.goto();
-        homePage.login();
-        cy.get("#add-to-cart-sauce-labs-backpack").click();
-        cy.wait(5000);
-        cy.get("#remove-sauce-labs-backpack").click()
+        home.login();
+        product.product_adding_and_removing();
         cy.get("#add-to-cart-sauce-labs-backpack").should('contain','Add to cart'); 
     })
 
     it('Verify Remove Item from the cart',()=>{
-        homePage.goto();
-        homePage.login();
-        cy.get("#add-to-cart-sauce-labs-backpack").click();
-        cy.get('[data-test="shopping-cart-link"]').click()
-        cy.get("#remove-sauce-labs-backpack").click();
+        home.login();
+        product.addItem_and_navigateToCart();
+        cart.removeFromCart();
         cy.get('[data-test="shopping-cart-link"]').should('contain',''); 
     })
 
     it('Verify Redirection to Home Page',()=>{
-        homePage.goto();
-        homePage.login();
-        cy.get('[data-test="shopping-cart-link"]').click()
-        cy.get("#continue-shopping").click();
+        home.login();
+        product.navigation_to_cartPage();
+        cart.continueShopping();
         cy.url().should('contain','inventory.html'); 
     })
 
     it('Verify navigation to checkout page',()=>{
-        homePage.goto();
-        homePage.login();
-        cy.get("#add-to-cart-sauce-labs-backpack").click();
-        cy.get('[data-test="shopping-cart-link"]').click();
-        cy.get("#checkout").click();
+        home.login();
+        product.addItem_and_navigateToCart();
+        cart.checkoutButton();
         cy.get("[data-test='title']").should('contain','Checkout: Your Information'); 
     })
 
     it('Verify navigation to checkout overview page',()=>{
-        homePage.goto();
-        homePage.login();
-        cy.get("#add-to-cart-sauce-labs-backpack").click();
-        cy.get('[data-test="shopping-cart-link"]').click();
-        cy.get("#checkout").click();
-        cy.get("#first-name").type('Fasih');
-        cy.get("#last-name").type('Uddin');
-        cy.get("#postal-code").type('2500');
-        cy.get("#continue").click();
+        home.login();
+        product.addItem_and_navigateToCart();
+        cart.checkoutButton();
+        checkout.navigationToCheckoutOverview()
         cy.get("[data-test='title']").should('contain','Checkout: Overview'); 
     })
 
-    it('Verify redirect to cart pafe via cancel',()=>{
-        homePage.goto();
-        homePage.login();
-        cy.get("#add-to-cart-sauce-labs-backpack").click();
-        cy.get('[data-test="shopping-cart-link"]').click();
-        cy.get("#checkout").click();
-        cy.get("#continue").click();
-        cy.get("#cancel").click();
+    it('Verify redirect to cart page via cancel',()=>{
+        home.login();
+        product.addItem_and_navigateToCart();
+        cart.checkoutButton();
+        checkout.continue();
+        checkoutoverview.cancel();
         cy.url().should('contain','cart.html'); 
     })
 
-
     it('Verify order placed functionality',()=>{
-        homePage.goto();
-        homePage.login();
-        cy.get("#add-to-cart-sauce-labs-backpack").click();
-        cy.get('[data-test="shopping-cart-link"]').click();
-        cy.get("#checkout").click();
-        cy.get("#first-name").type('Fasih');
-        cy.get("#last-name").type('Uddin');
-        cy.get("#postal-code").type('2500');
-        cy.get("#continue").click();
-        cy.get("#finish").click();
+        home.login();
+        product.addItem_and_navigateToCart();;
+        cart.checkoutButton();
+        checkout.navigationToCheckoutOverview();
+        checkoutoverview.finish();
         cy.get("[data-test='complete-header']").should('contain','Thank you for your order!');
-    })
-
-    // describe('Test1', () => {
-    //     it('verify user Login successfully',()=>{
-    //         cy.visit("https://www.allivet.com");
-    //         cy.get('[name="username"]').type('Admin');
-    //         cy.get('[name="password"]').type('admin123');
-    //         cy.get('.orangehrm-login-button').click();
-    //         cy.get('.oxd-topbar-header-breadcrumb-module').should('be.visible').and('contain', 'Dashboard');
-    //     })
-
+    });
 })

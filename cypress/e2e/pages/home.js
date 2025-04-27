@@ -1,13 +1,14 @@
-class HomePage {
+class Home{
 
-    goto() {
-        cy.visit("https://www.saucedemo.com/");
-    }
-    
     login(){
+        this.goto();
         this.enterUserName();
         this.enterPassword();
         this.clickLoginButton();
+    }
+
+    goto() {
+        cy.visit("https://www.saucedemo.com/");
     }
 
     enterUserName() {
@@ -24,4 +25,4 @@ class HomePage {
 }
 
 
-export default HomePage;
+export default Home;
